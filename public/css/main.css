@@ -1,0 +1,190 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Ubuntu&display=swap');
+
+:root {
+    --bg-color: #202124;
+    --sec-color: #303134;
+    --main-font-color: #e8eaed;
+    --sec-font-color: #9aa0a6;
+}
+
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Poppins", sans-serif;   
+    transition: all 0.5s ease-in-out; 
+}
+
+body{
+    height: 100vh;
+}
+
+.main-container{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content{
+    height: 600px;
+    width: 800px;
+    border-radius: 15px;
+    background-color: var(--bg-color);
+}
+
+.content .sidebar{
+    position: relative;
+    top: 0;
+    left: 0;    
+    width: 200px;
+    height: 100%;
+
+    display: block;
+
+    background-color: var(--sec-font-color);
+    border-radius: 15px 0px 0px 15px;
+    transition: all 0.5s ease-in-out;
+}
+
+.content .sidebar.full{
+    width: 100%;
+    border-radius: 15px;    
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.content .sidebar .title{
+    font-size: 20pt;   
+    height: 90px; 
+}
+
+.content .sidebar.full .title{
+    font-size: 48pt;
+}
+
+.content .game-board{
+    position: relative;
+    top: -600px;
+    left: 200px;  
+    height: 600px;
+    width: 600px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.content.full .game-board{
+    display: none;
+}
+
+.game-board .board{
+    display: none;
+}
+
+.game-board .message{
+    display: none;
+}
+
+.sidebar.full .input-name-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sidebar .input-name-container{
+    display: none;
+}
+
+.sidebar .online-users{
+    height: 150px;
+    width: 200px;
+    background-color: aqua;
+}
+
+.sidebar .chat-container{
+    display: block;
+    height: 300px;
+    width: 200px;
+    border-radius: 0 0 0 15px;
+    background-color: #e8eaed;
+}
+
+.sidebar.sidebar.full .chat-container{
+    display: none;
+}
+
+.sidebar .name-container{
+    display: block;
+    height: 30px;
+}
+
+.sidebar.sidebar.full .name-container{
+    display: none;
+}
+
+.sidebar .room-container{
+    display: block;
+    height: 30px;
+}
+
+.sidebar.sidebar.full .room-container{
+    display: none;
+}
+
+.online-user-title{
+    height: 30px;
+    width: 100%;
+    padding-left: 10px;
+    background-color: #303134;
+}
+
+.online-user-body{
+    height: 120px;
+    width: 100%;
+}
+
+.online-user-body ul{
+    list-style: none;
+    padding: 10px;
+    font-size: 12pt;
+    height: 100%;    
+}
+
+.chat-title{
+    height: 30px;
+    width: 100%;
+    padding-left: 10px;
+    background-color: #303134;
+}
+
+.chat-body{
+    height: 230px;
+    width: 100%;
+}
+
+.chat-body ul{
+    list-style: none;
+    padding: 10px;
+    font-size: 10pt;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+.chat-input{
+    height: 40px;
+    width: 100%;
+}
+
+.chat-input input{
+    border: none;
+    border-radius: 0 0 0 15px;
+    height: 100%;
+    width: 100%;
+    padding-left:10px;
+}

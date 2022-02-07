@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conecta 4</title>
+
+    <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+    
+    <div class="main-container">
+        <div class="content full">
+            
+            <div class="sidebar full">
+                <div class="title">
+                    conecta 4
+                </div>
+
+                <div class="input-name-container">
+                    <input type="text"
+                            placeholder="nombre"
+                            id="txtName">
+
+                    <div class="play">
+                        <button id="btnPlay">
+                            jugar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="name-container">
+                    Nombre: <span id="name-text"></span>
+                </div>
+
+                <div class="room-container">
+                    Room: <span id="room-text"></span>
+                </div>
+
+                <div class="online-users">
+                    <div class="online-user-title">
+                        usuarios conectados
+                    </div>
+                    <div class="online-user-body">
+                        <ul id="online-users-list"></ul>
+                    </div>
+                </div>
+
+                <div class="chat-container">
+                    <div class="chat">
+                        <div class="chat-title">
+                            chat
+                        </div>
+                        <div class="chat-body">
+                            <ul id="chat-messages">
+                            </ul>
+                        </div>
+                        <div class="chat-input">
+                            <input type="text"
+                                    placeholder="escribe..."
+                                    id="txtChat">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="game-board">
+
+                <div class="room-election" id="room-election">
+                    unirse a una sala
+                    <div class="join">
+                        <input type="text"
+                                size="6"
+                                placeholder="código"
+                                id="txtCode">
+                        <button id="btnJoin">
+                            unirse
+                        </button>
+                    </div>
+                    o
+                    <div class="create">
+                        <button id="btnCreate">
+                            crear
+                        </button>
+                    </div>
+                </div>
+
+                <div class="message" id="message">
+                    <div class="room-code">
+                        Room: <b id="code">"code"</b>
+                    </div>
+                    esperando...
+                    <div>
+                        <button id="btnStart">iniciar</button>
+                    </div>
+                </div>
+
+                
+                <div class="board" id="board">
+                    <div class="turn-indicator">
+                        <div id="turn">
+                            turno: <span id="turn-text"></span>
+                        </div>
+                    </div>
+                    <canvas height="500" width="500"></canvas>
+                </div>
+            </div>
+
+
+        </div>
+    </div>    
+
+    <script src="./socket.io/socket.io.js"></script>
+    <script src="./js/game.js"></script>
+
+</body>
+</html>
