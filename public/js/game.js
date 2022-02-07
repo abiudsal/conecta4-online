@@ -3,6 +3,8 @@ const divBoard = document.querySelector('#board');
 const divRoomElection = document.querySelector('#room-election');
 const divMessage = document.querySelector('#message');
 const divChat = document.querySelector('.chat-container');
+const chat = document.querySelector('.chat');
+const chatButton = document.querySelector('.chat-title');
 const divOnlineU = document.querySelector('.online-users');
 const divSidebar = document.querySelector('.sidebar');
 const divContent = document.querySelector('.content');
@@ -46,7 +48,7 @@ const getBoard = ( canvas, numCells = 20 ) => {
     }
 
     const drawGrid = () => {
-        ctx.strokeStyle = '#333'
+        ctx.strokeStyle = '#AAA'
         ctx.beginPath();
         for (let i = 0; i< numCells+1; i++){
             ctx.moveTo( i*cellSize, 0 );
@@ -288,3 +290,6 @@ btnPlay.addEventListener( 'click', setNombre);
 btnJoin.addEventListener( 'click', conectarseSala);
 btnCreate.addEventListener( 'click', crearSala);
 btnStart.addEventListener( 'click', iniciarJuego);
+chatButton.addEventListener( 'click', () => {
+    chat.classList.toggle('minimized');
+})

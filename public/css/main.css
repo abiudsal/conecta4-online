@@ -1,10 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Poppins&family=Ubuntu&display=swap');
 
 :root {
-    --bg-color: #202124;
-    --sec-color: #303134;
-    --main-font-color: #e8eaed;
-    --sec-font-color: #9aa0a6;
+    --bg-color: #252A34;
+    --bg-color2: #3d4657;
+    --contrast-color1: #08D9D6;
+    --contrast-color2: #FF2E63;
+    --font-color: #EAEAEA;
 }
 
 *{
@@ -12,11 +13,15 @@
     margin: 0;
     padding: 0;
     font-family: "Poppins", sans-serif;   
-    transition: all 0.5s ease-in-out; 
+    transition: all 0.5s ease-in-out;    
 }
 
 body{
     height: 100vh;
+    background-color: #ff5782;
+    opacity: 1;
+    background: radial-gradient(circle, transparent 20%, #ff5782 20%, #ff5782 80%, transparent 80%, transparent), radial-gradient(circle, transparent 20%, #ff5782 20%, #ff5782 80%, transparent 80%, transparent) 27.5px 27.5px, linear-gradient(#252A34 2.2px, transparent 2.2px) 0 -1.1px, linear-gradient(90deg, #252A34 2.2px, #ff5782 2.2px) -1.1px 0;
+    background-size: 55px 55px, 55px 55px, 27.5px 27.5px, 27.5px 27.5px;
 }
 
 .main-container{
@@ -24,7 +29,7 @@ body{
     height: 100%;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
 }
 
 .content{
@@ -35,36 +40,125 @@ body{
 }
 
 .content .sidebar{
+    z-index: 999;
     position: relative;
     top: 0;
     left: 0;    
     width: 200px;
     height: 100%;
-
+    
     display: block;
-
-    background-color: var(--sec-font-color);
+    
+    background-color: var(--bg-color);
     border-radius: 15px 0px 0px 15px;
+    transition-delay: 0.5s;
     transition: all 0.5s ease-in-out;
 }
 
 .content .sidebar.full{
-    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;    
+    width: 800px;
+    height: 100%;
     border-radius: 15px;    
+
     display: flex;
     align-items: center;
     flex-direction: column;
     justify-content: center;
 }
 
-.content .sidebar .title{
-    font-size: 20pt;   
+.sidebar .title-small{
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 22pt;   
     height: 90px; 
+    width: 200px;
+    opacity: 1;
+    color: var(--contrast-color2);
+
+    text-align: center;
+}
+
+.sidebar.full .title-small{
+    opacity: 0;
+}
+
+.sidebar .name-container{
+    position: absolute;
+    top: 90px;
+    left: 0;
+    height: 30px;
+    color: var(--font-color);
+    padding-left: 10px;
+    opacity: 1;
+}
+
+.sidebar.full .name-container{
+    opacity: 0;
+}
+
+.sidebar .room-container{
+    position: absolute;
+    top: 120px;
+    left: 0;
+    height: 30px;
+    color: var(--font-color);
+    padding-left: 10px;
+    opacity: 1;
+}
+
+.sidebar.full .room-container{
+    opacity: 0;
 }
 
 .content .sidebar.full .title{
+    color: var(--contrast-color2);
     font-size: 48pt;
+    display: block;
 }
+
+.content .sidebar .title{
+    display: none;
+}
+
+
+
+.sidebar.full .input-name-container{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.sidebar .input-name-container{
+    display: none;
+}
+
+.sidebar .online-users{    
+    position: absolute;
+    top: 150px;
+    left: 0;
+    height: 150px;
+    width: 200px;
+}
+
+.sidebar .chat-container{
+    position: absolute;
+    display: block;
+    top: 300px;
+    left: 0;
+    height: 300px;
+    width: 100%;
+}
+
+.sidebar.sidebar.full .chat-container{
+    display: none;
+}
+
+
+
 
 .content .game-board{
     position: relative;
@@ -72,20 +166,16 @@ body{
     left: 200px;  
     height: 600px;
     width: 600px;
-
-    /*
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;*/
 }
 
 .game-board.show {
+    background-color: var(--bg-color2);
     opacity: 1;
     pointer-events: all;    
 }
 
 .game-board{
+    border-radius: 0 15px 15px 0;
     opacity: 0;
     pointer-events: none;
 }
@@ -98,6 +188,11 @@ body{
     height: 200px;
     width: 200px;
     opacity: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     pointer-events: none;
 }
 
@@ -114,6 +209,11 @@ body{
     height: 200px;
     width: 200px;
     opacity: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
     pointer-events: none;
 }
 
@@ -142,130 +242,55 @@ body{
 
 
 
-
-
-.sidebar.full .input-name-container{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-}
-
-.sidebar .input-name-container{
-    display: none;
-}
-
-.sidebar .online-users{
-    height: 150px;
-    width: 200px;
-    background-color: aqua;
-}
-
-.sidebar .chat-container{
-    display: block;
-    height: 300px;
-    width: 200px;
-    border-radius: 0 0 0 15px;
-    background-color: #e8eaed;
-}
-
-.sidebar.sidebar.full .chat-container{
-    display: none;
-}
-
-.sidebar .name-container{
-    display: block;
-    height: 30px;
-}
-
-.sidebar.full .name-container{
-    display: none;
-}
-
-.sidebar .room-container{
-    display: block;
-    height: 30px;
-}
-
-.sidebar.full .room-container{
-    display: none;
-}
-
 .online-user-title{
+    border-radius: 10px 10px 0 0;
     height: 30px;
     width: 100%;
     padding-left: 10px;
-    background-color: #303134;
+    background-color: var(--contrast-color1);
 }
 
 .online-user-body{
+    filter: brightness(85%);
+    background-color: var(--bg-color);
     height: 120px;
     width: 100%;
+    background-color: var(--font-color);
+    border-radius: 0 0 10px 10px;
 }
 
 .online-user-body ul{
-    list-style: none;
-    padding: 10px;
-    font-size: 12pt;
-    height: 100%;    
-}
-
-.chat-title{
-    height: 30px;
-    width: 100%;
-    padding-left: 10px;
-    background-color: #303134;
-}
-
-.chat-body{
-    height: 230px;
-    width: 100%;
-}
-
-.chat-body ul{
+    color: var(--bg-color);
     list-style: none;
     padding: 10px;
     font-size: 10pt;
-    height: 100%;
-    overflow-y: scroll;
+    height: 100%;    
 }
 
-.chat-input{
-    height: 40px;
-    width: 100%;
-}
-
-.chat-input input{
+.content input{
     border: none;
-    border-radius: 0 0 0 15px;
-    height: 100%;
-    width: 100%;
-    padding-left:10px;
+    border-radius: 10px;
+    padding: 15px 20px;
+    margin: 10px 0px;
+    background-color: var(--font-color);
+    color: var(--bg-color);
 }
 
-@keyframes hideElement {
-    0%{
-        opacity: 1;
-        height: auto;
-        transform: scale(1.5);        
-    }
-    100%{
-        transform: scale(0);
-        opacity: 0;
-        height: 0;
-    }
+.content button{
+    border: none;
+    border-radius: 10px;
+    padding: 15px 20px;
+    cursor: pointer;
+    margin: 10px 0px;
+    background-color: var(--contrast-color1);
+    color: var(--bg-color);
 }
 
-@keyframes showElement {
-    0%{
-        display: none;
-    }
-    1%{
-        display: block;
-        opacity: 0;
-        transform: scale(0);        
-    }
-    100%{
-        transform: scale(1);
-        opacity: 1;
-    }
+#btnCreate{
+    background-color: var(--contrast-color2);
+    color: var(--font-color);
+}
+
+.content button:hover{
+    font-weight: bolder;
 }
