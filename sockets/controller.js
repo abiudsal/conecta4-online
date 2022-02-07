@@ -122,6 +122,10 @@ const socketController = async ( socket, io ) => {
     const rgb = colors[ num - 1 ].color;
     const color = colors[ num - 1 ].name;
 
+    if( !name || name.length < 2){
+        name = color;
+    }
+
     user = {
         id,
         nombre: name,

@@ -6,6 +6,7 @@ const divChat = document.querySelector('.chat-container');
 const divOnlineU = document.querySelector('.online-users');
 const divSidebar = document.querySelector('.sidebar');
 const divContent = document.querySelector('.content');
+const divGameBoard = document.querySelector('.game-board');
 
 const turnContainer = document.querySelector('#turn-indicator');
 
@@ -175,13 +176,17 @@ const setNombre = () => {
     nombre = txtName.value;
     nameText.innerHTML = nombre;
     
+    divRoomElection.classList.add('show');
+    //divRoomElection.style.display = 'block';
+    //divRoomElection.style.opacity = '1';
+    divGameBoard.classList.add('show');
     divSidebar.classList.remove('full');
     divContent.classList.remove('full');
 }
 
 const mostrarTablero = () => {
-    divMessage.style.display = 'none';
-    divBoard.style.display = 'block';
+    divMessage.classList.remove('show');
+    divBoard.classList.add('show');
 }
 
 const dibujarUsuarios = ({ usuarios }) => {
@@ -216,8 +221,14 @@ const comunicacionSockets = () => {
         roomText.innerHTML = room;
         roomTextMsg.innerHTML = room;
 
-        divRoomElection.style.display = 'none';
-        divMessage.style.display = 'block';
+        //divRoomElection.style.display = 'none';
+        //divMessage.style.display = 'block';
+        divRoomElection.classList.remove('show');
+        divMessage.classList.add('show')
+        setTimeout(() => {
+            //divRoomElection.style.display = 'none';
+            //divMessage.style.display = 'block';
+        }, 1000); 
         divChat.style.display = 'block';
         divOnlineU.style.display = 'block';
 
@@ -259,8 +270,13 @@ const iniciarJuego = () => {
 const init = () => {
     divChat.style.display = 'none';
     divOnlineU.style.display = 'none';
+    //divRoomElection.style.display = 'none';
+    //divRoomElection.style.opacity = '0';
 
-    
+    //divMessage.style.display = 'none'
+
+    divSidebar.classList.add('full');
+    divContent.classList.add('full');
 }
 
 
