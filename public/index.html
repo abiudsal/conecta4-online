@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="./css/chat.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body>
+<body class="css-selector">
     
     <div class="main-container">
         <div class="content full">
@@ -41,12 +41,12 @@
                 </div>
 
                 <div class="room-container">
-                    Room: <span id="room-text"></span>
+                    Room: <span id="room-text"></span><i class='bx bxs-copy-alt copy'></i>
                 </div>
 
                 <div class="online-users">
                     <div class="online-user-title">
-                        usuarios conectados
+                        jugadores (<span id="num-players"></span>)
                     </div>
                     <div class="online-user-body">
                         <ul id="online-users-list"></ul>
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="chat-container">
-                    <div class="chat">
+                    <div class="chat minimized">
                         <div class="chat-title">
                             chat 
                             <i class='bx bx-chevron-down arrow-down'></i>
@@ -96,7 +96,7 @@
 
                 <div class="message" id="message">
                     <div class="room-code">
-                        Room: <b id="code">"code"</b>
+                        Room: <b id="code">"code"</b><i class='bx bxs-copy-alt copy'></i>
                     </div>
                     esperando...
                     <div>

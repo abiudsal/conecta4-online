@@ -26,9 +26,12 @@ const btnCreate = document.querySelector('#btnCreate');
 const btnStart = document.querySelector('#btnStart');
 
 const turnText = document.querySelector('#turn-text');
+const numPlayers = document.querySelector('#num-players');
 const canvas = document.querySelector('canvas');
 const chatMessages = document.querySelector("#chat-messages");
 const listUsers = document.querySelector("#online-users-list");
+
+const btnsCopy = document.getElementsByClassName('copy');
 
 
 const getBoard = ( canvas, numCells = 20 ) => {
@@ -192,6 +195,7 @@ const mostrarTablero = () => {
 }
 
 const dibujarUsuarios = ({ usuarios }) => {
+    numPlayers.innerHTML = usuarios.length;
     listUsers.innerHTML = '';
     usuarios.forEach( element => {
         const msgLi = document.createElement('li');
@@ -292,4 +296,11 @@ btnCreate.addEventListener( 'click', crearSala);
 btnStart.addEventListener( 'click', iniciarJuego);
 chatButton.addEventListener( 'click', () => {
     chat.classList.toggle('minimized');
-})
+});
+Array.from( btnsCopy )
+.forEach( element => {
+    element.addEventListener( 'click', () => {
+        console.log(room);
+        navigator.clipboard.writeText(room);
+    })
+});
