@@ -233,6 +233,13 @@ body{
     left: 0;
     height: 150px;
     width: 200px;
+
+    display: flex;
+    justify-content: center;
+}
+
+.sidebar .online-users > div{
+    width: 90%;
 }
 
 .sidebar .chat-container{
@@ -345,24 +352,21 @@ body{
 
 
 .online-user-title{
-    border-radius: 10px 10px 0 0;
+    border-radius: 10px ;
     height: 30px;
     width: 100%;
     padding-left: 10px;
-    background-color: var(--contrast-color1);
+    border: 2px solid var(--contrast-color2);
+    color: var(--font-color);
 }
 
 .online-user-body{
     filter: brightness(85%);
-    background-color: var(--bg-color);
-    height: 120px;
+    color: var(--font-color);
     width: 100%;
-    background-color: var(--font-color);
-    border-radius: 0 0 10px 10px;
 }
 
 .online-user-body ul{
-    color: var(--bg-color);
     list-style: none;
     padding: 10px;
     font-size: 10pt;
@@ -387,15 +391,23 @@ input:hover{
     box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
-/*.content button{
-    border: none;
-    border-radius: 10px;
-    padding: 15px 20px;
-    margin: 10px 0px;
-    cursor: pointer;
-    background-color: var(--contrast-color1);
-    color: var(--bg-color);
-}*/
+.bxs-circle{
+    color: green;
+    transform: scale(0.75);
+    animation: circle 2s infinite;
+}
+
+@keyframes circle {
+    0%{
+        filter: brightness(100%);
+    }
+    50%{
+        filter: brightness(200%);
+    }
+    100%{
+        filter: brightness(100%);
+    }
+}
 
 
 .copy{

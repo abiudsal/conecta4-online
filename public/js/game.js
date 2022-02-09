@@ -11,6 +11,8 @@ const divContent = document.querySelector('.content');
 const divGameBoard = document.querySelector('.game-board');
 
 const turnContainer = document.querySelector('#turn-indicator');
+const roomContainer = document.querySelector('.room-container');
+const nameContainer = document.querySelector('.name-container');
 
 const txtName = document.querySelector('#txtName');
 const txtCode = document.querySelector('#txtCode');
@@ -179,9 +181,14 @@ const enviarMensaje = ({ keyCode }) => {
 
 const setNombre = () => {
     nombre = txtName.value;
-    nameText.innerHTML = nombre;
+    nameText.innerHTML = `<b>${nombre}</b>`;
     
     divRoomElection.classList.add('show');
+    roomContainer.style.display = 'none';
+
+    if(nombre.length < 2){
+        nameContainer.style.display = 'none';
+    }
     //divRoomElection.style.display = 'block';
     //divRoomElection.style.opacity = '1';
     divGameBoard.classList.add('show');
@@ -199,7 +206,7 @@ const dibujarUsuarios = ({ usuarios }) => {
     listUsers.innerHTML = '';
     usuarios.forEach( element => {
         const msgLi = document.createElement('li');
-        msgLi.innerHTML = element.nombre;
+        msgLi.innerHTML = `${element.nombre}<i class='bx bxs-circle'></i>`;
         listUsers.appendChild( msgLi );
     } )   
     
@@ -224,19 +231,25 @@ const comunicacionSockets = () => {
     socket.on( 'welcome', ( payload ) => {
         room = payload.room;
         id = payload.id;
-        roomText.innerHTML = room;
+        roomText.innerHTML = `<b>${room}</b>`;;
         roomTextMsg.innerHTML = room;
 
         //divRoomElection.style.display = 'none';
         //divMessage.style.display = 'block';
         divRoomElection.classList.remove('show');
         divMessage.classList.add('show')
-        setTimeout(() => {
-            //divRoomElection.style.display = 'none';
-            //divMessage.style.display = 'block';
-        }, 1000); 
+        roomContainer.style.display = '';
+        
+        if( nombre.length < 2){
+            nameContainer.style.display = '';            
+        }
+
+        nombre = payload.nombre;
+        nameText.innerHTML = `<b>${nombre}</b>`;
+
+
         divChat.style.display = 'block';
-        divOnlineU.style.display = 'block';
+        divOnlineU.style.display = 'flex';
 
         if (id !== payload.admin){
             btnStart.style.display = 'none';

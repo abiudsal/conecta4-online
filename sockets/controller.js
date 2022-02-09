@@ -137,7 +137,7 @@ const socketController = async ( socket, io ) => {
     rooms[ roomCode ].users[ id ] = user;
 
     socket.join( roomCode );
-    socket.emit( 'welcome', { room: roomCode, id, admin: rooms[ roomCode ].admin })
+    socket.emit( 'welcome', { room: roomCode, id, nombre:name, admin: rooms[ roomCode ].admin })
     io.to( roomCode ).emit('usuarios-activos', {
         usuarios: Object.values(rooms[ roomCode ].users),
         admin: rooms[ roomCode ].admin
