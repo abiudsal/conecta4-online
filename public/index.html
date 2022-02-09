@@ -14,15 +14,15 @@
 <body <!--class="css-selector"--></body>
     
     <div class="main-container">
-        <div class="content full">
+        <div class="content">
             
-            <div class="sidebar full">
+            <div class="main-screen show">
                 <div class="title">
                     <div class="slide-title-1"></div>
                     <div class="text">conecta <span class="conecta4">4</span></div>
                     <div class="slide-title-2"></div>
                 </div>
-
+    
                 <div class="input-name-container">
                     <input type="text"
                             placeholder="nombre"
@@ -36,24 +36,27 @@
                     </div>
                 </div>
 
+            </div>
+            
+            <div class="sidebar">
                 <div class="title-small-container">
                     <div class="title-small">
                         conecta <span class="conecta4">4</span>
                     </div>
                 </div>
 
-                <div class="name-container">
-                    Nombre: <span id="name-text"></span>
+                <div class="sidebar-element name-container">
+                    nombre: <span id="name-text"></span>
                 </div>
 
-                <div class="room-container">
-                    Room: <span id="room-text"></span><i class='bx bxs-copy-alt copy'></i>
+                <div class="sidebar-element room-container">
+                    room: <span id="room-text"></span><i class='bx bxs-copy-alt copy'></i>
                 </div>
 
                 <div class="online-users">
                     <div>
                         <div class="online-user-title">
-                            jugadores (<span id="num-players"></span>)
+                            jugadores (<span id="num-players"></span>/4)
                         </div>
                         <div class="online-user-body">
                             <ul id="online-users-list"></ul>

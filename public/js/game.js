@@ -9,6 +9,7 @@ const divOnlineU = document.querySelector('.online-users');
 const divSidebar = document.querySelector('.sidebar');
 const divContent = document.querySelector('.content');
 const divGameBoard = document.querySelector('.game-board');
+const divMainTitle = document.querySelector('.main-screen');
 
 const turnContainer = document.querySelector('#turn-indicator');
 const roomContainer = document.querySelector('.room-container');
@@ -184,16 +185,20 @@ const setNombre = () => {
     nameText.innerHTML = `<b>${nombre}</b>`;
     
     divRoomElection.classList.add('show');
-    roomContainer.style.display = 'none';
+
+    roomContainer.classList.remove('show');
 
     if(nombre.length < 2){
-        nameContainer.style.display = 'none';
+        nameContainer.classList.remove('show');
     }
     //divRoomElection.style.display = 'block';
     //divRoomElection.style.opacity = '1';
+
     divGameBoard.classList.add('show');
-    divSidebar.classList.remove('full');
-    divContent.classList.remove('full');
+    divSidebar.classList.add('show');
+    divMainTitle.classList.remove('show');
+
+    //divContent.classList.remove('full');
 }
 
 const mostrarTablero = () => {
@@ -238,18 +243,15 @@ const comunicacionSockets = () => {
         //divMessage.style.display = 'block';
         divRoomElection.classList.remove('show');
         divMessage.classList.add('show')
-        roomContainer.style.display = '';
-        
-        if( nombre.length < 2){
-            nameContainer.style.display = '';            
-        }
+        roomContainer.classList.add('show');
+        nameContainer.classList.add('show');        
 
         nombre = payload.nombre;
         nameText.innerHTML = `<b>${nombre}</b>`;
 
 
-        divChat.style.display = 'block';
-        divOnlineU.style.display = 'flex';
+        divChat.classList.add('show');
+        divOnlineU.classList.add('show');
 
         if (id !== payload.admin){
             btnStart.style.display = 'none';
@@ -287,15 +289,15 @@ const iniciarJuego = () => {
 }
 
 const init = () => {
-    divChat.style.display = 'none';
-    divOnlineU.style.display = 'none';
+    //divChat.style.display = 'none';
+    //divOnlineU.style.display = 'none';
     //divRoomElection.style.display = 'none';
     //divRoomElection.style.opacity = '0';
 
     //divMessage.style.display = 'none'
 
-    divSidebar.classList.add('full');
-    divContent.classList.add('full');
+    //divSidebar.classList.add('full');
+    //divContent.classList.add('full');
 }
 
 
