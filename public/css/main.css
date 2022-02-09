@@ -19,6 +19,11 @@
 
 body{
     height: 100vh;
+    background-color: #252A34;
+    opacity: 1;
+    background-image:  radial-gradient(#FF2E63 0.75px, transparent 0.75px), radial-gradient(#FF2E63 0.75px, #252A34 0.75px);
+    background-size: 30px 30px;
+    background-position: 0 0,15px 15px;
     /*background-color: #ff5782;
     background-color: var(--bg-color3);
     opacity: 1;
@@ -39,6 +44,7 @@ body{
     width: 800px;
     border-radius: 15px;
     background-color: var(--bg-color);
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 .content .sidebar{
@@ -71,17 +77,38 @@ body{
     justify-content: center;
 }
 
-.sidebar .title-small{
+.title-small-container{
     position: absolute;
     top: 0;
     left: 0;
-    font-size: 22pt;   
-    height: 90px; 
     width: 200px;
+    height: 90px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.sidebar .title-small{
+    font-size: 22pt;   
     opacity: 1;
     color: var(--contrast-color2);
 
     text-align: center;
+
+    border: 2px solid var(--bg-color2);
+    padding: 5px 15px;
+    border-radius: 45px;
+    margin-bottom: 10px;
+    margin: 0;
+}
+
+.sidebar .title-small:hover{
+    color: var(--contrast-color1);
+}
+
+.sidebar .title-small:hover .conecta4{
+    color: var(--contrast-color2);
 }
 
 .sidebar.full .title-small{
@@ -116,15 +143,77 @@ body{
     opacity: 0;
 }
 
+.title{
+    position: relative;
+    border: 2px solid var(--bg-color2);
+    padding: 15px 25px;
+    border-radius: 60px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
 .content .sidebar.full .title{
     color: var(--contrast-color2);
     font-size: 48pt;
     display: block;
 }
 
+.title .text{
+    position: relative;
+    
+    z-index: 6;
+}
+
+.title .slide-title-1{
+    background-color: var(--bg-color2);
+    position: absolute;
+    bottom: 0;
+    left: -200px;
+    width: 50%;
+    height: 100%;
+    z-index: 5;
+}
+
+.title .slide-title-2{
+    background-color: var(--bg-color2);
+    position: absolute;
+    bottom: 0;
+    right: -200px;
+    width: 50%;
+    height: 100%;
+    z-index: 5;
+}
+
+.title:hover .slide-title-2{
+    right: 0;
+}
+
+.title:hover .slide-title-1{
+    left: 0;
+}
+
+
+
+
+
+
+
+.content .sidebar.full .title:hover .conecta4{
+    color: var(--contrast-color2);
+}
+
+.conecta4{
+    color: var(--contrast-color1);
+}
+
+.content .sidebar.full .title:hover .text{
+    color: var(--contrast-color1);
+}
+
 .content .sidebar .title{
     display: none;
 }
+
 
 
 
@@ -183,7 +272,8 @@ body{
 }
 
 
-.room-election{    
+.room-election{ 
+    color: var(--font-color);   
     position: absolute;
     top: 200px;
     left: 200px;
@@ -204,7 +294,16 @@ body{
     transition-delay: 0.25s;
 }
 
+.join{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: row;
+}
+
 .message{
+    color: var(--font-color);  
     position: absolute;
     top: 200px;
     left: 200px;
@@ -227,6 +326,7 @@ body{
 
 
 .board{
+    color: var(--font-color);
     position: absolute;
     top: 30px;
     left: 50px;
@@ -269,33 +369,33 @@ body{
     height: 100%;    
 }
 
+#txtCode{
+    width: 90px;
+}
+
 .content input{
     border: none;
     border-radius: 10px;
     padding: 15px 20px;
-    margin: 10px 0px;
+    margin: 10px 5px;
     background-color: var(--font-color);
     color: var(--bg-color);
+    transition: all .35s ease-Out;
 }
 
-.content button{
+input:hover{
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+/*.content button{
     border: none;
     border-radius: 10px;
     padding: 15px 20px;
-    cursor: pointer;
     margin: 10px 0px;
+    cursor: pointer;
     background-color: var(--contrast-color1);
     color: var(--bg-color);
-}
-
-#btnCreate{
-    background-color: var(--contrast-color2);
-    color: var(--font-color);
-}
-
-.content button:hover{
-    font-weight: bolder;
-}
+}*/
 
 
 .copy{
@@ -310,29 +410,4 @@ body{
     filter: brightness(60%);
     color: var(--font-color);
     cursor: pointer;
-}
-
-.css-selector {
-    background: linear-gradient(135deg, #ff2e63, #08d9d6);
-    background-size: 400% 400%;
-
-    -webkit-animation: AnimationName 45s ease infinite;
-    -moz-animation: AnimationName 45s ease infinite;
-    animation: AnimationName 45s ease infinite;
-}
-
-@-webkit-keyframes AnimationName {
-    0%{background-position:0% 49%}
-    50%{background-position:100% 52%}
-    100%{background-position:0% 49%}
-}
-@-moz-keyframes AnimationName {
-    0%{background-position:0% 49%}
-    50%{background-position:100% 52%}
-    100%{background-position:0% 49%}
-}
-@keyframes AnimationName {
-    0%{background-position:0% 49%}
-    50%{background-position:100% 52%}
-    100%{background-position:0% 49%}
 }

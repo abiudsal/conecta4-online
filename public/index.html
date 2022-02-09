@@ -8,32 +8,38 @@
 
     <link rel="stylesheet" href="./css/main.css">
     <link rel="stylesheet" href="./css/chat.css">
+    <link rel="stylesheet" href="./css/buttons.css">
     <link href='https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css' rel='stylesheet'>
 </head>
-<body class="css-selector">
+<body <!--class="css-selector"--></body>
     
     <div class="main-container">
         <div class="content full">
             
             <div class="sidebar full">
                 <div class="title">
-                    conecta 4
+                    <div class="slide-title-1"></div>
+                    <div class="text">conecta <span class="conecta4">4</span></div>
+                    <div class="slide-title-2"></div>
                 </div>
 
                 <div class="input-name-container">
                     <input type="text"
                             placeholder="nombre"
                             id="txtName">
-
+                    
                     <div class="play">
-                        <button id="btnPlay">
-                            jugar
-                        </button>
+                        <div class="button button-1">
+                            <div class="slide-left-1"></div>
+                            <div class="button-text" id="btnPlay">jugar</div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="title-small">
-                    conecta 4
+                <div class="title-small-container">
+                    <div class="title-small">
+                        conecta <span class="conecta4">4</span>
+                    </div>
                 </div>
 
                 <div class="name-container">
@@ -82,15 +88,17 @@
                                 size="6"
                                 placeholder="código"
                                 id="txtCode">
-                        <button id="btnJoin">
-                            unirse
-                        </button>
+                        <div class="button button-1 small">
+                            <div class="slide-left-1"></div>
+                            <div class="button-text" id="btnJoin">unirse</div>
+                        </div>
                     </div>
                     o
                     <div class="create">
-                        <button id="btnCreate">
-                            crear
-                        </button>
+                        <div class="button button-2">
+                            <div class="slide-left-2"></div>
+                            <div class="button-text" id="btnCreate">crear</div>
+                        </div>
                     </div>
                 </div>
 
@@ -99,8 +107,9 @@
                         Room: <b id="code">"code"</b><i class='bx bxs-copy-alt copy'></i>
                     </div>
                     esperando...
-                    <div>
-                        <button id="btnStart">iniciar</button>
+                    <div class="button button-1">
+                        <div class="slide-left-1"></div>
+                        <div class="button-text" id="btnStart">iniciar</div>
                     </div>
                 </div>
 
