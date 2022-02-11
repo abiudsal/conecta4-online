@@ -18,7 +18,8 @@ const colors = [
     {'color': '#fbbc05', 'name': 'yellow'},
 ]
 
-const turn = (x, y, { id, room, rgb, nombre }, io) => {
+const turn = (x, y, user, io) => {
+    const { id, room, rgb, nombre } = user;
     console.log('Se recibio', x, y);
     if( id === turnoActual( room )){
         console.log(' si -- o:');
@@ -33,12 +34,13 @@ const turn = (x, y, { id, room, rgb, nombre }, io) => {
             if( playerWon ){
                 io.to( room ).emit('message', { msg: `Ganó el jugador ${ nombre }`});
                 io.to( room ).emit('message', { msg: 'Nueva partida iniciará pronto...'} );
+                io.to( room ).emit('game-status-message', { victory: user } );
+                io.to( room ).emit( 'time-out', { timeout: true } );
 
                 let contador = 6;
                 const timer = setInterval( () => {
                     contador--;
 
-                    io.to( room ).emit( 'time-out', { timeout: true } );
 
                     if( contador < 0 ){
                         clearInterval( timer );
@@ -54,7 +56,7 @@ const turn = (x, y, { id, room, rgb, nombre }, io) => {
                         io.to( room ).emit( 'time-out', { timeout: false });
                     }
                     else{
-                        io.to( room ).emit('message', { msg: `Nueva partida en ${contador}s`} );
+                        io.to( room ).emit('message', { msg: `Nueva partida en ${contador}s`} );                        
                     }
                 }, 1000 );
             }
@@ -62,12 +64,9 @@ const turn = (x, y, { id, room, rgb, nombre }, io) => {
                 siguienteTurno( room );
 
                 const idT = turnoActual( room );
-
                 io.to( room ).emit('current-turn', {
                     turn: idT,
                     usuarios: rooms[ room ].users
-                    //name: colors[t-1].name,
-                    //color: colors[t-1].color
                 });
             }
         }
@@ -149,6 +148,13 @@ const socketController = async ( socket, io ) => {
         if( rooms[ roomCode ].admin === id ){
             if( rooms[ roomCode ].players >= 2 ){
                 rooms[ roomCode ].status = 1
+
+                const idT = turnoActual( roomCode );
+                io.to( roomCode ).emit('current-turn', {
+                    turn: idT,
+                    usuarios: rooms[ roomCode ].users
+                });
+
                 io.to( roomCode ).emit( 'iniciar-juego');
                 io.to( roomCode ).emit( 'board', rooms[ roomCode ].board.getBoard() );
             }

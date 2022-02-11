@@ -11,7 +11,9 @@ const divContent = document.querySelector('.content');
 const divGameBoard = document.querySelector('.game-board');
 const divMainTitle = document.querySelector('.main-screen');
 
-const turnContainer = document.querySelector('#turn-indicator');
+const turnContainer = document.querySelector('#turn');
+const gameStateContainer = document.querySelector('#game-state-msg');
+const gameStateText = document.querySelector('#game-state-text');
 const roomContainer = document.querySelector('.room-container');
 const nameContainer = document.querySelector('.name-container');
 
@@ -127,7 +129,7 @@ const turn = (x, y, color) => {
 const establecerTurnoActual = ( { turn, usuarios } ) => {
     let nombre = '';
     if( turn === id ){
-        nombre = `<span style="color: ${usuarios[turn].rgb};font-weight: bold">${usuarios[turn].nombre}(Tú)</span>`;
+        nombre = `<span style="color: ${usuarios[turn].rgb};font-weight: bold">${usuarios[turn].nombre} (Tú)</span>`;
     }
     else{
         nombre = `<span style="color: ${usuarios[turn].rgb};font-weight: bold">${usuarios[turn].nombre}</span>`;
@@ -139,10 +141,12 @@ const establecerTurnoActual = ( { turn, usuarios } ) => {
 const setBlocked = ({ timeout }) => {
     blocked = timeout;  
     if( blocked ){
-        turnContainer.style.display = 'none';
+        turnContainer.classList.remove('show');
+        gameStateContainer.classList.add('show');        
     }  
     else{
-        turnContainer.style.display = '';
+        turnContainer.classList.add('show');
+        gameStateContainer.classList.remove('show');
     }
 }
 
@@ -169,6 +173,23 @@ const mostrarMensaje = ({ msg, usuario }) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
+const mostrarMensajeEstado = ({ victory }) => {
+    let mensaje;
+    if( victory ){
+        mensaje = `
+            <b style="color: ${victory.rgb}">${victory.nombre}</b> ganó
+            <br>
+        `;
+    }
+    else{
+        mensaje = `
+            Empate
+            <br>
+        `
+    }   
+    gameStateText.innerHTML = mensaje
+}
+
 const enviarMensaje = ({ keyCode }) => {
     //newMessages.style.display = 'none';
     const mensaje = txtChat.value;
@@ -191,6 +212,9 @@ const setNombre = () => {
     if(nombre.length < 2){
         nameContainer.classList.remove('show');
     }
+    else{
+        nameContainer.classList.add('show');
+    }
     //divRoomElection.style.display = 'block';
     //divRoomElection.style.opacity = '1';
 
@@ -204,6 +228,7 @@ const setNombre = () => {
 const mostrarTablero = () => {
     divMessage.classList.remove('show');
     divBoard.classList.add('show');
+    turnContainer.classList.add('show');
 }
 
 const dibujarUsuarios = ({ usuarios }) => {
@@ -213,11 +238,7 @@ const dibujarUsuarios = ({ usuarios }) => {
         const msgLi = document.createElement('li');
         msgLi.innerHTML = `${element.nombre}<i class='bx bxs-circle'></i>`;
         listUsers.appendChild( msgLi );
-    } )   
-    
-    //chatMessages.scrollTop = chatMessages.scrollHeight;
-
-    //newMessages.style.display = (usuario.id === id) ? 'none' : '';
+    } );   
 }
 
 const comunicacionSockets = () => {
@@ -262,6 +283,7 @@ const comunicacionSockets = () => {
     socket.on( 'current-turn', establecerTurnoActual);
     socket.on( 'iniciar-juego', mostrarTablero);
     socket.on( 'message', mostrarMensaje);
+    socket.on( 'game-status-message', mostrarMensajeEstado);
     socket.on( 'time-out', setBlocked);
     socket.on( 'turn', ({ x, y, color }) => {
         turn(x, y, color);

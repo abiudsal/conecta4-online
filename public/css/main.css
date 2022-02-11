@@ -287,6 +287,10 @@ body{
 }
 
 
+/*********************************************************
+    Board 
+**********************************************************/
+
 .board{
     color: var(--font-color);
     position: absolute;
@@ -303,6 +307,55 @@ body{
     pointer-events: all;
     animation-delay: 0.25s;    
 }
+
+.game-state{
+    display: flex;
+    justify-content: center;
+}
+
+.game-state #turn{
+    padding: 5px 0;
+}
+#game-state-msg > div{
+    padding: 10px;
+    text-align: center;
+}
+
+.game-state #game-state-msg{
+    position: absolute;
+    top: calc(50% - 150px);
+    left: calc(50% - 150px);
+    height: 300px;
+    width: 300px;
+    border-radius: 15px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    background-color: var(--contrast-color2);
+    transform: scale(0.1);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+     
+    opacity: 0;
+    transition: all 0.2s ease-out;
+    pointer-events: none;
+}
+
+.game-state #game-state-msg.show{   
+    transform: scale(1);
+    pointer-events: all;
+    opacity: 0.75;
+    transition: all 0.2s ease-in;
+}
+
+.game-state #game-state-text{
+    font-size: xx-large;
+}
+
+/*********************************************************
+    Board END
+**********************************************************/
 
 #txtCode{
     width: 90px;
