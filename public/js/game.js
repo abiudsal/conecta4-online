@@ -105,6 +105,7 @@ let room;
 let nombre;
 let size = 7
 let blocked = false;
+let playing = false;
 
 const { fillCell, reset, getCellCoordinates } = getBoard( canvas, size );
 
@@ -167,7 +168,7 @@ const mostrarMensaje = ({ msg, usuario }) => {
         }
     }
     else{
-        mensaje = msg;
+        mensaje = `<i>${msg}</i>`;
     }    
     //console.log( mensaje );
     const msgLi = document.createElement('li');
@@ -235,24 +236,33 @@ const setNombre = () => {
 }
 
 const mostrarTablero = () => {
+    playing = true;
     divWaitingRoom.classList.remove('show');
     divBoard.classList.add('show');
     turnContainer.classList.add('show');
 }
 
-const dibujarUsuarios = ({ usuarios }) => {
+const dibujarUsuarios = ({ usuarios, admin }) => {
     numPlayers.innerHTML = usuarios.length;
     listUsers.innerHTML = '';
     usuarios.forEach( element => {
         const msgLi = document.createElement('li');
-        msgLi.innerHTML = `<span style="color: ${element.rgb}">${element.nombre}`;
+        msgLi.innerHTML = `${element.id === admin ? "<i class='bx bxs-crown'></i>" : ""} <span style="color: ${element.rgb}">${element.nombre}`;
         listUsers.appendChild( msgLi );
     } );   
+
+    if (id !== admin){
+        btnStart.style.display = 'none';
+    }
+    else{
+        btnStart.style.display = '';
+    }
 }
 
 const errorMessage = ( msg ) => {
     divWaitingRoom.classList.remove('show');
     divRoomElection.classList.remove('show');
+    divBoard.classList.remove('show');
     divMessage.classList.add('show');
 
     messageText.innerHTML = `Error: ${msg}`;
@@ -289,17 +299,14 @@ const comunicacionSockets = () => {
 
 
         divChat.classList.add('show');
-        divOnlineU.classList.add('show');
-
-        if (id !== payload.admin){
-            btnStart.style.display = 'none';
-        }
+        divOnlineU.classList.add('show');        
     });
 
     socket.on( 'board', reset);
     socket.on( 'current-turn', establecerTurnoActual);
     socket.on( 'error-full-room', () => errorMessage('sala llena'));
     socket.on( 'error-no-room', () => errorMessage('la sala no existe'));
+    socket.on( 'error-not-enough-players', () => errorMessage('No hay suficientes jugadores'));
     socket.on( 'iniciar-juego', mostrarTablero);
     socket.on( 'message', mostrarMensaje);
     socket.on( 'game-status-message', mostrarMensajeEstado);
@@ -330,8 +337,15 @@ const iniciarJuego = () => {
 }
 
 const regresar = () => {
-    divRoomElection.classList.add('show');
     divMessage.classList.remove('show');
+
+    if( playing === true ){
+        divWaitingRoom.classList.add('show');                
+        playing = false;
+    }
+    else{
+        divRoomElection.classList.add('show');        
+    }
 }
 
 const init = () => {

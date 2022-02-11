@@ -3,7 +3,8 @@ const {
     desconectarUsuario, 
     existeUsuario, 
     siguienteTurno,
-    turnoActual 
+    turnoActual, 
+    buscarNuevoAdmin
 } = require('../shared/rooms');
 const { v4: uuidv4 } = require('uuid');
 
@@ -17,6 +18,32 @@ const colors = [
     {'color': '#34a853', 'name': 'green'},
     {'color': '#fbbc05', 'name': 'yellow'},
 ]
+
+const getColorRBG = ( roomCode ) => {
+    const values = Object.values( rooms[ roomCode ].users );
+    let color, rgb
+
+    for ( let i = 0; i< colors.length; i++){
+        console.log( colors[i] );
+        let existe = false;
+    
+        for ( let j=0; j< values.length; j++ ){
+            if( colors[i].name === values[j].color ){
+                existe = true;
+                break;
+            }
+        }
+    
+        if( !existe ){            
+            return {
+                color: colors[i].name,
+                rgb: colors[i].color
+            }
+        }
+    }
+
+    return {}
+}
 
 const turn = (x, y, user, io) => {
     const { id, room, rgb, nombre } = user;
@@ -121,15 +148,15 @@ const socketController = async ( socket, io ) => {
             code: roomCode,
             players: 0,
             turn: 0,
-            users: {}
+            users: {},
+            status: 0
         }
     }
 
     rooms[ roomCode ].players++;
     num = rooms[ roomCode ].players;
 
-    const rgb = colors[ num - 1 ].color;
-    const color = colors[ num - 1 ].name;
+    const { rgb, color } = getColorRBG( roomCode );
 
     if( !name || name.length < 2){
         name = color;
@@ -151,6 +178,12 @@ const socketController = async ( socket, io ) => {
         usuarios: Object.values(rooms[ roomCode ].users),
         admin: rooms[ roomCode ].admin
     });
+    io.to( roomCode ).emit( 'message', { msg: `¡Bienvenido, ${name}! ` } );
+
+    if( rooms[ roomCode ].status === 1 ){
+        io.to( roomCode ).emit( 'iniciar-juego');
+        io.to( roomCode ).emit( 'board', rooms[ roomCode ].board.getBoard() );
+    }
 
     // Eventos soportados para sockets
 
@@ -167,6 +200,8 @@ const socketController = async ( socket, io ) => {
 
                 io.to( roomCode ).emit( 'iniciar-juego');
                 io.to( roomCode ).emit( 'board', rooms[ roomCode ].board.getBoard() );
+
+                rooms[ roomCode ].status = 1;
             }
         }
     });
@@ -180,15 +215,35 @@ const socketController = async ( socket, io ) => {
     socket.on('disconnect', () => {
         desconectarUsuario( roomCode, id );
         rooms[ roomCode ].players--;
+
+        if( rooms[ roomCode ].players === 0 ){
+            console.log( 'limpiando sala', roomCode )
+            delete rooms[ roomCode ];            
+            return socket.disconnect();
+        }
+        
+        if( rooms[ roomCode ].admin === id ){
+            rooms[ roomCode ].admin = buscarNuevoAdmin( roomCode );
+            console.log('Cambio de admin');
+        }
+
+        io.to( roomCode ).emit( 'message', { msg: `${name} ha salido de la partida` } );
         io.to( roomCode ).emit('usuarios-activos', {
             usuarios: Object.values(rooms[ roomCode ].users),
             admin: rooms[ roomCode ].admin
         });
-        /*
-        if( usuario.status === 0){
-            
+
+        if( rooms[ roomCode ].status === 1 ){
+            if( rooms[ roomCode ].players === 1 ){
+                console.log( 'Deteniendo juego' );
+                io.to( roomCode ).emit( 'error-not-enough-players' );
+                io.to( roomCode ).emit('message', { msg: `Esperando por más jugadores`});
+                rooms[ roomCode ].board.clear();
+                rooms[ roomCode ].turn = 0;
+                rooms[ roomCode ].status = 0;
+            }
         }
-        */
+
     });         
 }
 

@@ -27,7 +27,13 @@ const siguienteTurno = ( room ) => {
     }
 }
 
+const buscarNuevoAdmin = ( room ) => {
+    const keys = Object.keys( rooms[room].users );
+    return keys[0];
+}
+
 module.exports = {
+    buscarNuevoAdmin,
     desconectarUsuario,
     existeUsuario,
     rooms,
