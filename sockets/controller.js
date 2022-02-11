@@ -49,7 +49,7 @@ const turn = (x, y, user, io) => {
                     io.to( room ).emit('message', { msg: `Empate`});
                     io.to( room ).emit('game-status-message', {} );
                 }
-                
+
                 io.to( room ).emit('message', { msg: 'Nueva partida iniciará pronto...'} );
                 io.to( room ).emit( 'time-out', { timeout: true } );
 
@@ -102,10 +102,12 @@ const socketController = async ( socket, io ) => {
     if( roomCode !== 'no-room'){
         console.log(roomCode)
         if( !rooms[roomCode] ){
+            socket.emit( 'error-no-room' );
             return socket.disconnect();
         }
 
-        if( rooms[roomCode].players === 4 ){
+        if( rooms[ roomCode ].players === 4 ){
+            socket.emit( 'error-full-room' );
             return socket.disconnect();
         }        
     }
@@ -176,6 +178,7 @@ const socketController = async ( socket, io ) => {
 
     socket.on('disconnect', () => {
         desconectarUsuario( roomCode, id );
+        rooms[ roomCode ].players--;
         io.to( roomCode ).emit('usuarios-activos', {
             usuarios: Object.values(rooms[ roomCode ].users),
             admin: rooms[ roomCode ].admin

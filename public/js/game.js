@@ -1,6 +1,7 @@
 // Referencias HTML
 const divBoard = document.querySelector('#board');
 const divRoomElection = document.querySelector('#room-election');
+const divWaitingRoom = document.querySelector('#waiting-room');
 const divMessage = document.querySelector('#message');
 const divChat = document.querySelector('.chat-container');
 const chat = document.querySelector('.chat');
@@ -25,10 +26,13 @@ const nameText = document.querySelector('#name-text');
 const roomText = document.querySelector('#room-text');
 const roomTextMsg = document.querySelector('#code');
 
+const messageText = document.querySelector('.message-text');
+
 const btnPlay = document.querySelector('#btnPlay');
 const btnJoin = document.querySelector('#btnJoin');
 const btnCreate = document.querySelector('#btnCreate');
 const btnStart = document.querySelector('#btnStart');
+const btnMessage = document.querySelector('#btnMessage');
 
 const turnText = document.querySelector('#turn-text');
 const numPlayers = document.querySelector('#num-players');
@@ -173,21 +177,26 @@ const mostrarMensaje = ({ msg, usuario }) => {
     chatMessages.scrollTop = chatMessages.scrollHeight;
 }
 
-const mostrarMensajeEstado = ({ victory }) => {
-    let mensaje;
-    if( victory ){
-        mensaje = `
-            <b style="color: ${victory.rgb}">${victory.nombre}</b> ganó
-            <br>
-        `;
+const mostrarMensajeEstado = ({ victory, msg }) => {
+    if( msg){
+        location.reload();
     }
     else{
-        mensaje = `
-            Empate
-            <br>
-        `
-    }   
-    gameStateText.innerHTML = mensaje
+        let mensaje;
+        if( victory ){
+            mensaje = `
+                <b style="color: ${victory.rgb}">${victory.nombre}</b> ganó
+                <br>
+            `;
+        }
+        else{
+            mensaje = `
+                Empate
+                <br>
+            `
+        }   
+        gameStateText.innerHTML = mensaje
+    }
 }
 
 const enviarMensaje = ({ keyCode }) => {
@@ -226,7 +235,7 @@ const setNombre = () => {
 }
 
 const mostrarTablero = () => {
-    divMessage.classList.remove('show');
+    divWaitingRoom.classList.remove('show');
     divBoard.classList.add('show');
     turnContainer.classList.add('show');
 }
@@ -236,9 +245,17 @@ const dibujarUsuarios = ({ usuarios }) => {
     listUsers.innerHTML = '';
     usuarios.forEach( element => {
         const msgLi = document.createElement('li');
-        msgLi.innerHTML = `${element.nombre}<i class='bx bxs-circle'></i>`;
+        msgLi.innerHTML = `<span style="color: ${element.rgb}">${element.nombre}`;
         listUsers.appendChild( msgLi );
     } );   
+}
+
+const errorMessage = ( msg ) => {
+    divWaitingRoom.classList.remove('show');
+    divRoomElection.classList.remove('show');
+    divMessage.classList.add('show');
+
+    messageText.innerHTML = `Error: ${msg}`;
 }
 
 const comunicacionSockets = () => {
@@ -263,7 +280,7 @@ const comunicacionSockets = () => {
         //divRoomElection.style.display = 'none';
         //divMessage.style.display = 'block';
         divRoomElection.classList.remove('show');
-        divMessage.classList.add('show')
+        divWaitingRoom.classList.add('show')
         roomContainer.classList.add('show');
         nameContainer.classList.add('show');        
 
@@ -281,6 +298,8 @@ const comunicacionSockets = () => {
 
     socket.on( 'board', reset);
     socket.on( 'current-turn', establecerTurnoActual);
+    socket.on( 'error-full-room', errorMessage('Sala llena'));
+    socket.on( 'error-no-room', errorMessage('La sala no existe'));
     socket.on( 'iniciar-juego', mostrarTablero);
     socket.on( 'message', mostrarMensaje);
     socket.on( 'game-status-message', mostrarMensajeEstado);
@@ -310,6 +329,11 @@ const iniciarJuego = () => {
     socket.emit( 'iniciar-juego');
 }
 
+const regresar = () => {
+    divRoomElection.classList.add('show');
+    divMessage.classList.remove('show');
+}
+
 const init = () => {
     //divChat.style.display = 'none';
     //divOnlineU.style.display = 'none';
@@ -331,6 +355,7 @@ btnPlay.addEventListener( 'click', setNombre);
 btnJoin.addEventListener( 'click', conectarseSala);
 btnCreate.addEventListener( 'click', crearSala);
 btnStart.addEventListener( 'click', iniciarJuego);
+btnMessage.addEventListener( 'click', regresar);
 chatButton.addEventListener( 'click', () => {
     chat.classList.toggle('minimized');
 });

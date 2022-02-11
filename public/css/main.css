@@ -264,7 +264,7 @@ body{
     flex-direction: row;
 }
 
-.message{
+.waiting-room{
     color: var(--font-color);  
     position: absolute;
     top: 200px;
@@ -280,7 +280,29 @@ body{
     pointer-events: none;
 }
 
-.message.show{
+.waiting-room.show{
+    opacity: 1;
+    pointer-events: all;
+    animation-delay: 0.25s;    
+}
+
+#message{
+    color: var(--font-color);  
+    position: absolute;
+    top: 200px;
+    left: 200px;
+    height: 200px;
+    width: 200px;
+    opacity: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    pointer-events: none;
+}
+
+#message.show{
     opacity: 1;
     pointer-events: all;
     animation-delay: 0.25s;    
@@ -329,7 +351,8 @@ body{
     width: 300px;
     border-radius: 15px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    background-color: var(--contrast-color2);
+    background-color: var(--font-color);
+    color: var(--bg-color);
     transform: scale(0.1);
 
     display: flex;
