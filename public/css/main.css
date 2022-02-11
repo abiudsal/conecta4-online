@@ -400,7 +400,7 @@ input:hover{
 
 .bxs-circle{
     color: green;
-    transform: scale(0.75);
+    transform: scale(0.55);
     animation: circle 2s infinite;
 }
 

@@ -38,6 +38,7 @@ const turnText = document.querySelector('#turn-text');
 const numPlayers = document.querySelector('#num-players');
 const canvas = document.querySelector('canvas');
 const chatMessages = document.querySelector("#chat-messages");
+const newMessageIndicator = document.querySelector("#new-message-indicator");
 const listUsers = document.querySelector("#online-users-list");
 
 const btnsCopy = document.getElementsByClassName('copy');
@@ -157,10 +158,12 @@ const setBlocked = ({ timeout }) => {
 
 const mostrarMensaje = ({ msg, usuario }) => {
     let mensaje = ''
+    let mostrar = '';
     if( usuario ){
         if (usuario.id === id){
             mensaje = `<span style="color: ${usuario.rgb};font-weight: bold">Tú:</span> ${msg}`;
             //newMessages.style.display = 'none';
+            mostrar = 'none';
         }
         else{
             mensaje = `<span style="color: ${usuario.rgb};font-weight: bold">${usuario.nombre}:</span> ${msg}`;
@@ -170,6 +173,7 @@ const mostrarMensaje = ({ msg, usuario }) => {
     else{
         mensaje = `<i>${msg}</i>`;
     }    
+    newMessageIndicator.style.display = mostrar;
     //console.log( mensaje );
     const msgLi = document.createElement('li');
     
@@ -200,7 +204,7 @@ const mostrarMensajeEstado = ({ victory, msg }) => {
     }
 }
 
-const enviarMensaje = ({ keyCode }) => {
+const enviarMensaje = ({ keyCode }) => {    
     //newMessages.style.display = 'none';
     const mensaje = txtChat.value;
     if( keyCode === 13 && mensaje.length > 0){
@@ -209,6 +213,8 @@ const enviarMensaje = ({ keyCode }) => {
 
         txtChat.value = '';
     }
+
+    newMessageIndicator.style.display = 'none';
 }
 
 const setNombre = () => {
@@ -372,6 +378,10 @@ btnStart.addEventListener( 'click', iniciarJuego);
 btnMessage.addEventListener( 'click', regresar);
 chatButton.addEventListener( 'click', () => {
     chat.classList.toggle('minimized');
+    if( !chat.classList.contains( 'minimized' ) ){
+        newMessageIndicator.style.display = 'none';
+    }
+    
 });
 Array.from( btnsCopy )
 .forEach( element => {
