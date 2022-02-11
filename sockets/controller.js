@@ -31,10 +31,26 @@ const turn = (x, y, user, io) => {
             io.to( room ).emit( 'turn', { x, y: nY, color: rgb });
             //console.log('Emitido');
     
-            if( playerWon ){
-                io.to( room ).emit('message', { msg: `Ganó el jugador ${ nombre }`});
+            if( playerWon === 0 ){
+                siguienteTurno( room );
+
+                const idT = turnoActual( room );
+                io.to( room ).emit('current-turn', {
+                    turn: idT,
+                    usuarios: rooms[ room ].users
+                });                
+            }
+            else{
+                if( playerWon === 1 ){
+                    io.to( room ).emit('message', { msg: `Ganó el jugador ${ nombre }`});
+                    io.to( room ).emit('game-status-message', { victory: user } );
+                }
+                else{
+                    io.to( room ).emit('message', { msg: `Empate`});
+                    io.to( room ).emit('game-status-message', {} );
+                }
+                
                 io.to( room ).emit('message', { msg: 'Nueva partida iniciará pronto...'} );
-                io.to( room ).emit('game-status-message', { victory: user } );
                 io.to( room ).emit( 'time-out', { timeout: true } );
 
                 let contador = 6;
@@ -59,15 +75,6 @@ const turn = (x, y, user, io) => {
                         io.to( room ).emit('message', { msg: `Nueva partida en ${contador}s`} );                        
                     }
                 }, 1000 );
-            }
-            else{
-                siguienteTurno( room );
-
-                const idT = turnoActual( room );
-                io.to( room ).emit('current-turn', {
-                    turn: idT,
-                    usuarios: rooms[ room ].users
-                });
             }
         }
         else{

@@ -1,7 +1,10 @@
 const boardControl = ( size ) => {
     let board;
+    const max = size*size;
+    let contador = 0;
 
     const clear = () => {
+        contador = 0;
         board = Array( size ).fill().map(() => Array(size).fill(null));
     }
 
@@ -21,6 +24,7 @@ const boardControl = ( size ) => {
 
     const makeTurn = (x, y, color) => {        
         board[y][x] = color;
+        contador++;
         return isWinningTurn(x, y);
     }
 
@@ -45,11 +49,14 @@ const boardControl = ( size ) => {
                 const count = numMatches(x, y, dx, dy) + numMatches(x, y, -dx, -dy) + 1;
 
                 if( count >= 4){
-                    return true;
+                    return 1;
                 }
             }
         }
-        return false;
+        if( contador === max){
+            return 2;
+        }
+        return 0;
     }
 
     clear();
