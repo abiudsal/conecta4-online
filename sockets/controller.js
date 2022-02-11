@@ -97,10 +97,10 @@ const socketController = async ( socket, io ) => {
 
     id = uuidv4();
 
-    console.log('Intento')
+    console.log('Intento de conexión')
 
     if( roomCode !== 'no-room'){
-        console.log(roomCode)
+        console.log('    ',roomCode)
         if( !rooms[roomCode] ){
             socket.emit( 'error-no-room' );
             return socket.disconnect();
@@ -112,6 +112,7 @@ const socketController = async ( socket, io ) => {
         }        
     }
     else{
+        console.log( '    ', 'Creando sala' );
         roomCode = makeID( 6 );
 
         rooms[ roomCode ] = {

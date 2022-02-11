@@ -298,8 +298,8 @@ const comunicacionSockets = () => {
 
     socket.on( 'board', reset);
     socket.on( 'current-turn', establecerTurnoActual);
-    socket.on( 'error-full-room', errorMessage('Sala llena'));
-    socket.on( 'error-no-room', errorMessage('La sala no existe'));
+    socket.on( 'error-full-room', () => errorMessage('sala llena'));
+    socket.on( 'error-no-room', () => errorMessage('la sala no existe'));
     socket.on( 'iniciar-juego', mostrarTablero);
     socket.on( 'message', mostrarMensaje);
     socket.on( 'game-status-message', mostrarMensajeEstado);
